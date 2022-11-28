@@ -313,7 +313,7 @@ class _AlarmPageState extends State<AlarmPage> {
 
   void deleteAlarm(int? id) {
     _alarmHelper.delete(id);
-    //unsubscribe for notification
+
     loadAlarms();
   }
 }
