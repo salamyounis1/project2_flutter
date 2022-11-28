@@ -289,53 +289,6 @@ class _AlarmPageState extends State<AlarmPage> {
     );
   }
 
-  void scheduleAlarm(
-      DateTime scheduledNotificationDateTime, AlarmInfo alarmInfo,
-      {required bool isRepeating}) async {
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'alarm_notif',
-      'alarm_notif',
-      channelDescription: 'Channel for Alarm notification',
-      icon: 'codex_logo',
-      sound: RawResourceAndroidNotificationSound('a_long_cold_sting'),
-      largeIcon: DrawableResourceAndroidBitmap('codex_logo'),
-    );
-
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails(
-      sound: 'a_long_cold_sting.wav',
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-    );
-    var platformChannelSpecifics = NotificationDetails(
-      android: androidPlatformChannelSpecifics,
-      iOS: iOSPlatformChannelSpecifics,
-    );
-
-    if (isRepeating)
-      await flutterLocalNotificationsPlugin.showDailyAtTime(
-        0,
-        'Office',
-        alarmInfo.title,
-        Time(
-          scheduledNotificationDateTime.hour,
-          scheduledNotificationDateTime.minute,
-          scheduledNotificationDateTime.second,
-        ),
-        platformChannelSpecifics,
-      );
-    else
-      await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
-        'Office',
-        alarmInfo.title,
-        tz.TZDateTime.from(scheduledNotificationDateTime, tz.local),
-        platformChannelSpecifics,
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-      );
-  }
 
   void onSaveAlarm(bool _isRepeating) {
     DateTime? scheduleAlarmDateTime;
